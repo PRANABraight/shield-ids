@@ -30,9 +30,9 @@ const Download: React.FC = () => {
   }, []);
 
   const versions = [
-    { id: 'latest', label: 'Latest Version (v1.0.0)', date: '2023-04-07', size: '45.2 MB' },
-    { id: 'beta', label: 'Beta Version (v0.9.5)', date: '2023-03-15', size: '42.8 MB' },
-    { id: 'alpha', label: 'Alpha Version (v0.8.2)', date: '2023-02-01', size: '38.5 MB' }
+    { id: 'latest', label: 'Latest Version (v1.0.0)', date: '2025-04-07', size: '45.2 MB' },
+    { id: 'beta', label: 'Beta Version (v0.9.5)', date: '2025-03-15', size: '42.8 MB' },
+    { id: 'alpha', label: 'Alpha Version (v0.8.2)', date: '2025-02-01', size: '38.5 MB' }
   ];
 
   const platforms = [
@@ -360,7 +360,9 @@ const Download: React.FC = () => {
 sudo apt install -y build-essential libpcre3-dev libpcre3 libpcap-dev libnet1-dev libyaml-0-2 libyaml-dev pkg-config zlib1g zlib1g-dev libcap-ng-dev libcap-ng0 libmagic-dev libnss3-dev libgeoip-dev liblua5.1-0-dev libhtp-dev libjansson-dev libjansson4 libpython2.7-dev rustc cargo`)}
                     >
                       {copiedCommand === `sudo apt update
-sudo apt install -y build-essential libpcre3-dev libpcre3 libpcap-dev libnet1-dev libyaml-0-2 libyaml-dev pkg-config zlib1g zlib1g-dev libcap-ng-dev libcap-ng0 libmagic-dev libnss3-dev libgeoip-dev liblua5.1-0-dev libhtp-dev libjansson-dev libjansson4 libpython2.7-dev rustc cargo` ? (
+sudo apt install -y build-essential libpcre3-dev libpcre3 libpcap-dev libnet1-dev libyaml-0-2 libyaml-dev pkg-config zlib1g zlib1g-dev libcap-ng-dev libcap-ng0 \\
+  libmagic-dev libnss3-dev libgeoip-dev liblua5.1-0-dev libhtp-dev libjansson-dev \\
+  libjansson4 libpython2.7-dev rustc cargo` ? (
                         <span className="copied">Copied!</span>
                       ) : (
                         <><FiCopy /> Copy</>
