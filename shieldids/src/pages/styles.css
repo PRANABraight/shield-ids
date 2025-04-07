@@ -1,0 +1,78 @@
+<<<<<<< Updated upstream
+=======
+/* CSS Reset */
+* {
+    box-sizing: border-box;
+}
+
+/* CSS Variables */
+:root {
+    --black-800: #03030a;
+    --black-700: #12121b;
+    --blue-300: #212446;
+    --gray-400: #2e2e38;
+    --primary-color: #efeefc;
+    --secondary-color: #94919d;
+    --blue: #605dff;
+    --blue-100: #ccc9f7;
+    --pink: #e493ff;
+    --yellow: #ffd86f;
+    --green: #54f9ff;
+    --black: black;
+    --white: white;
+    --transparent: transparent;
+}
+
+
+
+
+/* Base Styles */
+body {
+    background-color: var(--black-800);
+    color: var(--primary-color);
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 160%;
+    margin: 0;
+    min-height: 100%;
+}
+
+/* Media Queries */
+@media screen and (max-width: 991px) {
+    body {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    body {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+>>>>>>> Stashed changes
+/* styles.css
+.gradient-background {
+    background: linear-gradient(150deg, black, hsl(0, 0%, 25%), hsl(277, 100%, 7%), #4e2f91);
+    min-height: 100vh; /* Ensures the gradient covers the full viewport height *
+    padding: 1.5rem;   /* Adds padding around the content /
+    color: #f8f8f2;    /* Sets a light text color for contrast *
+  }
+   */
+
+/* styles.css */
+/* styles.css */
+.gradient-background {
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #53354a);
+    min-height: 100vh; /* Ensures the gradient covers the full viewport height */
+    padding: 1.5rem;   /* Adds padding around the content */
+    color: #eaeaea;    /* Sets a light text color for contrast */
+  }
+  

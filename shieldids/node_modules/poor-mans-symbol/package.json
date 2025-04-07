@@ -1,0 +1,58 @@
+{
+  "name": "poor-mans-symbol",
+  "version": "1.0.1",
+  "description": "Poor man's Symbol implementation, not compliant. Uses window.Symbol if present",
+  "license": "MIT",
+  "repository": "bfred-it/poor-mans-symbol",
+  "author": "Federico Brigante <bfred-it@users.noreply.github.com> (twitter.com/bfred_it)",
+  "keywords": [
+    "symbol",
+    "nano",
+    "tiny",
+    "small",
+    "browser",
+    "node"
+  ],
+  "files": [
+    "dist/poor-mans-symbol.common-js.js",
+    "dist/poor-mans-symbol.es-modules.js"
+  ],
+  "main": "dist/poor-mans-symbol.common-js.js",
+  "jsnext:main": "dist/poor-mans-symbol.es-modules.js",
+  "babel": {
+    "presets": [
+      "es2015-rollup"
+    ]
+  },
+  "scripts": {
+    "build:js": "bfred-npm-bundler poor-mans-symbol PoorSymbol",
+    "build:size": "gzip-size dist/poor-mans-symbol.browser.js",
+    "build": "npm-run-all --silent jsfix build:*",
+    "jsfix": "xo --fix",
+    "watch:build": "onchange 'index.js' --initial -- npm run build -- --continue-on-error",
+    "watch": "npm-run-all --parallel --silent watch:*",
+    "prepublish": "npm run build",
+    "test": "xo; npm run build"
+  },
+  "devDependencies": {
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "bfred-npm-bundler": "^5.0.0",
+    "gzip-size-cli": "^1.0.0",
+    "npm-run-all": "^1.7.0",
+    "onchange": "^2.2.0",
+    "xo": "^0.15.0"
+  },
+  "xo": {
+    "esnext": true,
+    "env": [
+      "browser"
+    ],
+    "rules": {
+      "prefer-template": 0
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/bfred-it/poor-mans-symbol/issues"
+  },
+  "homepage": "https://github.com/bfred-it/poor-mans-symbol#readme"
+}

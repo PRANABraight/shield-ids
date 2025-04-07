@@ -1,0 +1,384 @@
+.teem:hover {
+    
+    font-size: 20px;
+
+    /* text-decoration: underline; */
+    cursor: pointer;
+    transition: all 0.5s;
+    border: 1px solid #8683ff;
+    transform: translate(0, -5px);
+
+}
+
+.about-section {
+    background: black;
+    color: white;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.about-section::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background-image: 
+        radial-gradient(circle at center, rgba(134, 131, 255, 0.1) 0%, transparent 50%),
+        linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.98));
+    z-index: 0;
+    animation: rotate 60s linear infinite;
+}
+
+.about-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(134, 131, 255, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 80% 80%, rgba(96, 93, 255, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 50% 50%, rgba(255, 82, 182, 0.1) 0%, transparent 50%);
+    animation: colorPulse 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.about-content {
+    position: relative;
+    z-index: 1;
+}
+
+.about-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    overflow: hidden;
+}
+
+.about-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #8683ff, transparent);
+    animation: shimmerLine 2s infinite;
+}
+
+.about-title {
+    font-size: 5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    background: linear-gradient(45deg, 
+        #fff 0%,
+        #8683ff 25%,
+        #ff52b6 50%,
+        #8683ff 75%,
+        #fff 100%
+    );
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: titleGradient 8s linear infinite;
+    text-shadow: 0 0 30px rgba(134, 131, 255, 0.3);
+}
+
+.about-subtitle {
+    font-size: 1.3rem;
+    max-width: 800px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 3rem;
+    animation: fadeInUp 1s ease-out;
+}
+
+.scroll-btn {
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #8683ff, #605dff);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.scroll-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(134, 131, 255, 0.3);
+}
+
+.scroll-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(45deg);
+    animation: shimmer 2s infinite;
+}
+
+.discover-btn {
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(45deg, #8683ff, #605dff, #ff52b6);
+    background-size: 200% auto;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.discover-btn::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #8683ff, #ff52b6, #8683ff);
+    background-size: 200% auto;
+    z-index: -1;
+    border-radius: 14px;
+    animation: borderGlow 3s linear infinite;
+}
+
+.discover-btn:hover {
+    transform: translateY(-2px);
+    background-position: right center;
+    box-shadow: 0 10px 20px rgba(134, 131, 255, 0.2);
+}
+
+.content-section {
+    max-width: 900px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(134, 131, 255, 0.1);
+}
+
+.content-section h2 {
+    font-size: 2.5rem;
+    background: linear-gradient(90deg, #8683ff, #ff52b6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 1.5rem;
+}
+
+.content-section p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.8;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.team-card {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(134, 131, 255, 0.3);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+    border-color: #8683ff;
+}
+
+.team-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(134, 131, 255, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.team-card:hover::before {
+    opacity: 1;
+}
+
+.team-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg,
+        transparent 0%,
+        rgba(134, 131, 255, 0.1) 50%,
+        transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.team-card:hover::after {
+    opacity: 1;
+    animation: cardShine 1.5s ease-in-out infinite;
+}
+
+.team-image-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 2rem;
+}
+
+.team-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #8683ff;
+    background: black;
+    position: relative;
+    z-index: 1;
+}
+
+.image-error {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #8683ff, #605dff);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.team-card:hover .team-image {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(134, 131, 255, 0.3);
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #8683ff;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+    0% { transform: rotate(45deg) translate(-100%, -100%); }
+    100% { transform: rotate(45deg) translate(100%, 100%); }
+}
+
+@keyframes shine {
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
+}
+
+@keyframes colorPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes titleGradient {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+}
+
+@keyframes cardShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmerLine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes borderGlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(10px, -10px); }
+}
+
+@keyframes fade {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.6; }
+}
+
+@media (max-width: 768px) {
+    .about-title {
+        font-size: 3rem;
+    }
+    
+    .section-content {
+        padding: 2rem 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .about-section::after,
+    .about-title,
+    .team-card::after,
+    .particle {
+        animation: none;
+    }
+}

@@ -1,0 +1,65 @@
+/* styles.css */
+
+/* CSS Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* CSS Variables */
+:root {
+    --primary-color: #f8f8f2;
+    --secondary-color: #605dff;
+    /* --background-gradient: linear-gradient(135deg, #000000, #1a1a2e,  #0f3460, hsl(182, 18%, 35%)); */
+}
+
+/* Base Styles */
+body {
+    background-color: #03030a;
+    color: var(--primary-color);
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 0;
+    min-height: 100%;
+}
+
+/* Gradient Background */
+/* .gradient-background {
+    background: var(--background-gradient);
+    min-height: 100vh;
+    padding: 1.5rem;
+    color: var(--primary-color);
+} */
+
+/* Define the gradient background */
+.gradient-background {
+    /* Layer 1: Black corners transitioning to transparent */
+    background: linear-gradient(45deg, black ),
+                linear-gradient(-45deg, black),
+                /* Layer 2: Blue on the left, Green on the right */
+                linear-gradient(to right, blue, green),
+                /* Layer 3: Smoke effect at the bottom */
+                radial-gradient(circle , rgba(128,128,128,0.5), transparent 70%);
+    
+    /* Positioning and blending the layers */
+    background-blend-mode: screen;
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Ensures the gradient covers the full viewport height */
+    padding: 1rem;   /* Adds padding around the content */
+    color: #f8f8f2;    /* Sets a light text color for contrast */
+}
+
+
+/* Button Styles */
+.MuiButton-containedPrimary {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.MuiButton-outlinedSecondary {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
