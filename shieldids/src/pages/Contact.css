@@ -95,15 +95,12 @@
 
 /* Content layout */
 .contact-content {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
   gap: 2rem;
   margin-bottom: 3rem;
   position: relative;
   z-index: 5;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* Contact info card */
@@ -117,7 +114,6 @@
   transition: all 0.3s ease;
   position: relative;
   z-index: 2;
-  border-radius: 16px;
 }
 
 .contact-card:hover {
@@ -413,6 +409,10 @@
 
 /* Responsive design */
 @media (max-width: 992px) {
+  .contact-content {
+    grid-template-columns: 1fr;
+  }
+  
   .contact-header h1 {
     font-size: 2.8rem;
   }

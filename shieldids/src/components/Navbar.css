@@ -2,7 +2,7 @@
 .navbar {
   position: fixed;
   width: 100%;
-  padding: 1rem 2rem;
+  padding: 0.75rem 2rem;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
@@ -11,10 +11,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 80px;
 }
 
 .navbar.scrolled {
-  padding: 0.8rem 2rem;
+  padding: 0.6rem 2rem;
+  height: 70px;
   background: rgba(0, 0, 0, 0.95);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
@@ -30,8 +32,8 @@
 }
 
 .logo-image {
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   margin-right: 0.5rem;
 }
 
@@ -351,6 +353,32 @@
   transition: all 0.3s ease;
   flex: 1;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.user-avatar-greeting {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #8683ff, #ff52b6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(134, 131, 255, 0.4);
+  position: relative;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.user-avatar-greeting:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(134, 131, 255, 0.6);
 }
 
 .user-name {
@@ -381,8 +409,8 @@
 }
 
 .user-avatar {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: linear-gradient(45deg, #8683ff, #ff52b6);
   display: flex;
@@ -390,20 +418,26 @@
   justify-content: center;
   color: white;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.1rem;
   box-shadow: 0 2px 10px rgba(134, 131, 255, 0.3);
   position: relative;
   overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
   transition: all 0.3s ease;
+}
+
+.user-avatar:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 15px rgba(134, 131, 255, 0.5);
 }
 
 .user-avatar::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), transparent);
-  opacity: 0.5;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), transparent);
+  opacity: 0.7;
 }
 
 .user-avatar::after {
@@ -434,11 +468,56 @@
   background: rgba(18, 18, 27, 0.95);
   backdrop-filter: blur(10px);
   border-radius: 12px;
-  width: 220px;
+  width: 250px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
               0 0 0 1px rgba(255, 255, 255, 0.1);
   z-index: 10;
+}
+
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #8683ff, #ff52b6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.dropdown-user-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.dropdown-name {
+  font-weight: 600;
+  color: white;
+  margin-bottom: 2px;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-email {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dropdown-greeting {

@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 10rem 2rem 2rem;
   background: radial-gradient(circle at 50% 50%, rgba(26, 32, 44, 0.9), rgba(10, 15, 24, 0.98));
   background-size: cover;
   position: relative;
@@ -414,8 +414,17 @@
 
 /* Responsive styles */
 @media (max-width: 480px) {
+  .auth-form {
+    padding-top: 5rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    align-items: flex-start;
+  }
+  
   .auth-card {
     padding: 1.5rem;
+    width: 100%;
   }
   
   .auth-logo {
@@ -427,7 +436,7 @@
   }
   
   .success-animation-content {
-    padding: 2rem;
+    padding: 2rem 1.5rem;
   }
   
   .success-animation-content h2 {
@@ -435,14 +444,27 @@
   }
   
   .success-animation-content p {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
   
   .welcome-toast {
-    bottom: 20px;
-    min-width: 0;
-    width: 90%;
-    max-width: 90%;
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+  }
+}
+
+/* Additional media query for mid-sized devices */
+@media (min-width: 481px) and (max-width: 768px) {
+  .auth-form {
+    padding-top: 7rem;
+  }
+}
+
+/* Add specific iPad adjustment */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .auth-form {
+    padding-top: 8rem;
   }
 }
 

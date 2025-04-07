@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import './Auth.css';
-import { FaUser, FaEnvelope, FaLock, FaShieldAlt } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaLock, FaShieldAlt, FaCheckCircle } from 'react-icons/fa';
 
 interface AuthFormProps {
     isLogin: boolean;
@@ -228,44 +228,64 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
                         </div>
                     )}
 
-                    <motion.div
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        className='auth-button'
+                        fullWidth
+                        disabled={formLoading}
+                        sx={{ mt: 2, mb: 2 }}
                     >
-                        <Button 
-                            className='auth-button'
-                            type="submit"
-                            variant="contained"
-                            fullWidth
-                            disabled={formLoading || isLoading}
-                        >
-                            {(formLoading || isLoading) ? (
-                                <CircularProgress size={24} sx={{ color: 'white' }} />
-                            ) : (
-                                isLogin ? 'Sign In' : 'Create Account'
-                            )}
-                        </Button>
-                    </motion.div>
+                        {formLoading ? (
+                            <CircularProgress size={24} color="inherit" />
+                        ) : (
+                            isLogin ? 'Login' : 'Create Account'
+                        )}
+                    </Button>
 
-                    <motion.div 
-                        className="auth-switch-container"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.5 }}
-                    >
-                        <Typography align="center" sx={{ mt: 2 }}>
-                            <Link 
-                                to={isLogin ? '/register' : '/login'}
-                                className="auth-switch-text"
-                            >
-                                {isLogin 
-                                    ? "Don't have an account? Sign up" 
-                                    : 'Already have an account? Sign in'}
-                            </Link>
-                        </Typography>
-                    </motion.div>
+                    <Box sx={{ textAlign: 'center' }}>
+                        <Link
+                            to={isLogin ? '/signup' : '/login'}
+                            className='auth-switch-text'
+                        >
+                            {isLogin
+                                ? "Don't have an account? Sign Up"
+                                : 'Already have an account? Login'}
+                        </Link>
+                    </Box>
                 </Box>
             </motion.div>
+
+            {/* Success Animation Overlay */}
+            <AnimatePresence>
+                {showSuccessAnimation && (
+                    <motion.div
+                        className="success-animation-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        <motion.div
+                            className="success-animation-content"
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ delay: 0.2, type: 'spring', stiffness: 300, damping: 25 }}
+                        >
+                            <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{
+                                    scale: [0, 1.2, 1],
+                                    transition: { delay: 0.6, times: [0, 0.5, 1], duration: 0.6 }
+                                }}
+                            >
+                                <FaCheckCircle className="success-icon" />
+                            </motion.div>
+                            <h2>Registration Successful!</h2>
+                            <p>Your account has been created. You are now logged in.</p>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </motion.div>
     );
 };

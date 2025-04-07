@@ -10,13 +10,11 @@ import Contact from "./pages/Contact";
 import About from './components/About';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-// import Dashboard from './components/Dashboard';
 import Download from "./pages/Download";
 import Profile from "./pages/Profile";
 import AuthForm from "./components/auth/AuthForm";
 import { AuthProvider } from './components/auth/AuthContext';
 import LoadingPage from './components/LoadingPage';
-import Settings from './pages/Settings';
 
 const queryClient = new QueryClient();
 
@@ -48,10 +46,8 @@ const App = () => {
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
-              {/* <Route path="/dashboard" element={<Dashboard />} /> */}
               <Route path="/download" element={<Download />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/settings" element={<Settings />} />
 
               <Route path="/login" element={<AuthForm isLogin={true} />} />
               <Route path="/signup" element={<AuthForm isLogin={false} />} />

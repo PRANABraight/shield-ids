@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from './auth/AuthContext';
 import './Navbar.css';
 import logo from '../assets/NetGuard-removebg-preview.png';
-import { FaUserCircle, FaSignOutAlt, FaCog, FaChevronDown } from 'react-icons/fa';
-import { FiUser, FiSettings } from 'react-icons/fi';
+import { FaUserCircle, FaSignOutAlt, FaChevronDown } from 'react-icons/fa';
+import { FiUser } from 'react-icons/fi';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -57,12 +57,23 @@ const Navbar = () => {
 
   // Get user initials for avatar
   const getInitials = () => {
-    if (!userProfile?.name) return 'U';
+    if (!userProfile?.name) return user?.email?.charAt(0).toUpperCase() || 'U';
     
     const nameParts = userProfile.name.split(' ');
     if (nameParts.length === 1) return nameParts[0].charAt(0).toUpperCase();
     
     return (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
+  };
+
+  // Get user display name
+  const getUserName = () => {
+    if (userProfile?.name) return userProfile.name;
+    if (user?.displayName) return user.displayName;
+    if (user?.email) {
+      // If only email is available, use the part before @ as name
+      return user.email.split('@')[0];
+    }
+    return 'User';
   };
 
   const navLinks = [
@@ -102,20 +113,6 @@ const Navbar = () => {
         </Link>
       </motion.div>
 
-      {/* User greeting - visible on desktop only */}
-      {user && userProfile && (
-        <motion.div 
-          className="user-greeting"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          <span>
-            Welcome, <span className="user-name">{userProfile.name.split(' ')[0]}</span>!
-          </span>
-        </motion.div>
-      )}
-
       <div className={`navbar-links ${isMobileMenuOpen ? 'active' : ''}`}>
         <ul>
           {navLinks.map((link) => (
@@ -145,9 +142,20 @@ const Navbar = () => {
                 whileTap={{ scale: 0.95 }}
                 onClick={toggleUserMenu}
               >
-                <div className="user-avatar">
+                <motion.div 
+                  className="user-avatar" 
+                  title={getUserName()}
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ 
+                    type: "spring", 
+                    stiffness: 260, 
+                    damping: 20,
+                    delay: 0.2
+                  }}
+                >
                   {getInitials()}
-                </div>
+                </motion.div>
                 <FaChevronDown className={`avatar-chevron ${userMenuOpen ? 'open' : ''}`} />
               </motion.div>
               
@@ -160,19 +168,32 @@ const Navbar = () => {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
                   >
-                    {/* Mobile-only greeting */}
-                    <div className="dropdown-greeting">
-                      Hello, <strong>{userProfile?.name.split(' ')[0]}</strong>!
+                    {/* Header with user info */}
+                    <div className="dropdown-header">
+                      <motion.div 
+                        className="dropdown-avatar"
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 0.1 }}
+                      >
+                        {getInitials()}
+                      </motion.div>
+                      <motion.div 
+                        className="dropdown-user-info"
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.2 }}
+                      >
+                        <div className="dropdown-name">{getUserName()}</div>
+                        <div className="dropdown-email">{user.email}</div>
+                      </motion.div>
                     </div>
+                    
+                    <div className="dropdown-divider"></div>
                     
                     <Link to="/profile" className="dropdown-item" onClick={() => setUserMenuOpen(false)}>
                       <FiUser />
                       <span>My Profile</span>
-                    </Link>
-                    
-                    <Link to="/settings" className="dropdown-item" onClick={() => setUserMenuOpen(false)}>
-                      <FiSettings />
-                      <span>Settings</span>
                     </Link>
                     
                     <div className="dropdown-divider"></div>

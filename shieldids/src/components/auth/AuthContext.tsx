@@ -18,7 +18,7 @@ import {
   updateDoc 
 } from 'firebase/firestore';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FaCheckCircle, FaBell } from 'react-icons/fa';
+import { FaCheckCircle, FaBell, FaClock, FaUserCircle, FaShieldAlt, FaEnvelope, FaCalendarAlt, FaTimes } from 'react-icons/fa';
 
 interface UserProfile {
   uid: string;
@@ -56,7 +56,7 @@ export const AuthProvider: React.FC<{ children }> = ({ children }) => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showSuccessAnimation, setShowSuccessAnimation] = useState<boolean>(false);
-  const [showWelcomeToast, setShowWelcomeToast] = useState<boolean>(false);
+  const [showWelcomeModal, setShowWelcomeModal] = useState<boolean>(false);
   const [isUserNew, setIsUserNew] = useState<boolean>(false);
   const [previousLoginTime, setPreviousLoginTime] = useState<Date | null>(null);
 
@@ -79,11 +79,11 @@ export const AuthProvider: React.FC<{ children }> = ({ children }) => {
               lastLogin: serverTimestamp()
             });
             
-            // Show welcome toast if user wasn't previously logged in
+            // Show welcome modal if user wasn't previously logged in
             // and this isn't part of the initial registration flow
             if (!showSuccessAnimation && !isUserNew) {
-              setShowWelcomeToast(true);
-              setTimeout(() => setShowWelcomeToast(false), 5000);
+              setShowWelcomeModal(true);
+              // Modal will be closed by user clicking the close button
             }
           }
         } catch (error) {
@@ -209,6 +209,29 @@ export const AuthProvider: React.FC<{ children }> = ({ children }) => {
     return lastLogin.toLocaleDateString();
   };
 
+  // Get user initials for avatar
+  const getInitials = () => {
+    if (!userProfile?.name) return 'U';
+    
+    const nameParts = userProfile.name.split(' ');
+    if (nameParts.length === 1) return nameParts[0].charAt(0).toUpperCase();
+    
+    return (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
+  };
+
+  // Format date in a user-friendly way
+  const formatDate = (date: Date | null) => {
+    if (!date) return 'N/A';
+    
+    return new Date(date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   return (
     <AuthContext.Provider value={{
       user,
@@ -283,37 +306,151 @@ export const AuthProvider: React.FC<{ children }> = ({ children }) => {
         )}
       </AnimatePresence>
       
-      {/* Welcome Back Toast */}
+      {/* Enhanced Welcome Modal */}
       <AnimatePresence>
-        {showWelcomeToast && userProfile && (
+        {showWelcomeModal && userProfile && (
           <motion.div 
-            className="welcome-toast"
-            initial={{ opacity: 0, y: 50, x: '-50%' }}
-            animate={{ opacity: 1, y: 0, x: '-50%' }}
-            exit={{ opacity: 0, y: 50, x: '-50%' }}
-            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+            className="welcome-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowWelcomeModal(false)}
           >
-            <div className="welcome-toast-icon">
-              <FaBell />
-            </div>
-            <div className="welcome-toast-content">
-              <div className="welcome-toast-title">
-                Welcome back, {userProfile.name.split(' ')[0]}!
-              </div>
-              <div className="welcome-toast-message">
-                {previousLoginTime ? (
-                  <>Last login: {getLastLoginText()}</>
-                ) : (
-                  <>Glad to see you again</>
-                )}
-              </div>
-            </div>
-            <button 
-              className="welcome-toast-close"
-              onClick={() => setShowWelcomeToast(false)}
+            <motion.div 
+              className="welcome-modal"
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 50, scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
             >
-              &times;
-            </button>
+              <motion.button 
+                className="modal-close-btn"
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setShowWelcomeModal(false)}
+              >
+                <FaTimes />
+              </motion.button>
+              
+              <div className="modal-header">
+                <motion.div 
+                  className="welcome-avatar-large"
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.2, type: "spring" }}
+                >
+                  {userProfile.photoURL ? (
+                    <img src={userProfile.photoURL} alt={userProfile.name} />
+                  ) : (
+                    <div className="welcome-initials-large">
+                      {getInitials()}
+                    </div>
+                  )}
+                </motion.div>
+                
+                <motion.div
+                  className="welcome-title"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <h2>Welcome back, {userProfile.name.split(' ')[0]}!</h2>
+                  <p className="welcome-subtitle">We're glad to see you again</p>
+                </motion.div>
+              </div>
+              
+              <motion.div 
+                className="welcome-card"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <h3 className="section-title">
+                  <FaUserCircle className="section-icon" />
+                  Your Profile
+                </h3>
+                
+                <div className="profile-detail">
+                  <div className="detail-label">
+                    <FaUserCircle className="detail-icon" /> Full Name
+                  </div>
+                  <div className="detail-value">{userProfile.name}</div>
+                </div>
+                
+                <div className="profile-detail">
+                  <div className="detail-label">
+                    <FaEnvelope className="detail-icon" /> Email Address
+                  </div>
+                  <div className="detail-value">{userProfile.email}</div>
+                </div>
+                
+                <div className="profile-detail">
+                  <div className="detail-label">
+                    <FaCalendarAlt className="detail-icon" /> Account Created
+                  </div>
+                  <div className="detail-value">{formatDate(userProfile.createdAt)}</div>
+                </div>
+                
+                {previousLoginTime && (
+                  <div className="profile-detail highlight">
+                    <div className="detail-label">
+                      <FaClock className="detail-icon" /> Last Login
+                    </div>
+                    <div className="detail-value accent">{getLastLoginText()}</div>
+                  </div>
+                )}
+              </motion.div>
+              
+              <motion.div 
+                className="welcome-card security-summary"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                <h3 className="section-title">
+                  <FaShieldAlt className="section-icon" />
+                  Security Status
+                </h3>
+                <div className="security-progress">
+                  <div className="progress-bar">
+                    <div className="progress-fill" style={{ width: '65%' }}></div>
+                  </div>
+                  <div className="progress-text">Your account security is at 65%</div>
+                </div>
+                <div className="security-tip">
+                  <FaBell className="tip-icon" />
+                  <div className="tip-text">Consider enabling two-factor authentication to improve your security</div>
+                </div>
+              </motion.div>
+              
+              <motion.div 
+                className="modal-actions"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <motion.button 
+                  className="modal-action-btn secondary"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setShowWelcomeModal(false)}
+                >
+                  Close
+                </motion.button>
+                <motion.button 
+                  className="modal-action-btn primary"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    setShowWelcomeModal(false);
+                    window.location.href = '/profile';
+                  }}
+                >
+                  View Profile
+                </motion.button>
+              </motion.div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
