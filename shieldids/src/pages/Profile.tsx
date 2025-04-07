@@ -28,7 +28,6 @@ import './Profile.css';
 const Profile: React.FC = () => {
   const { user, userProfile, isLoading, updateUserProfile } = useAuth();
   const navigate = useNavigate();
-  
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -58,9 +57,11 @@ const Profile: React.FC = () => {
       
       // In a real app, these would come from the profile too
       // For demo, we're using defaults
-      setJobRole(userProfile.jobRole || 'Security Professional');
-      setLocation(userProfile.location || 'Bangalore, India');
-      setBio(userProfile.bio || 'Passionate about cybersecurity and protecting systems from intrusions. Experienced in network security and threat detection.');
+      // Type assertion to access additional profile fields
+      const extendedProfile = userProfile as any;
+      setJobRole(extendedProfile?.jobRole || 'Security Professional');
+      setLocation(extendedProfile?.location || 'Bangalore, India');
+      setBio(extendedProfile?.bio || 'Passionate about cybersecurity and protecting systems from intrusions. Experienced in network security and threat detection.');
     }
   }, [user, userProfile, isLoading, navigate]);
 
@@ -75,13 +76,15 @@ const Profile: React.FC = () => {
     if (userProfile) {
       setName(userProfile.name || '');
       setEmail(userProfile.email || '');
-      setJobRole(userProfile.jobRole || 'Security Professional');
-      setLocation(userProfile.location || 'Bangalore, India');
-      setBio(userProfile.bio || 'Passionate about cybersecurity and protecting systems from intrusions. Experienced in network security and threat detection.');
+      // Type assertion to access additional profile fields
+      const extendedProfile = userProfile as any;
+      setJobRole(extendedProfile?.jobRole || 'Security Professional');
+      setLocation(extendedProfile?.location || 'Bangalore, India');
+      setBio(extendedProfile?.bio || 'Passionate about cybersecurity and protecting systems from intrusions. Experienced in network security and threat detection.');
     }
-    setIsEditing(false);
     setError('');
     setSelectedImage(null);
+    setIsEditing(false);
   };
   
   const handleSaveChanges = async () => {
@@ -105,8 +108,9 @@ const Profile: React.FC = () => {
       await updateUserProfile({
         name,
         photoURL: updatedPhotoURL,
-        jobRole,
-        location,
+        // Use a type-safe approach for custom fields
+        ...(jobRole ? { jobRole } as any : {}),
+        ...(location ? { location } as any : {}),
         bio
       });
       
