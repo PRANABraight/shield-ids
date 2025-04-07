@@ -16,7 +16,11 @@ import {
   FaExclamationTriangle,
   FaBell,
   FaLock,
-  FaInfoCircle
+  FaInfoCircle,
+  FaMapMarkerAlt,
+  FaBriefcase,
+  FaIdCard,
+  FaStickyNote
 } from 'react-icons/fa';
 import Layout from '../components/Layout';
 import './Profile.css';
@@ -35,6 +39,11 @@ const Profile: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [activeTab, setActiveTab] = useState<'personal' | 'security'>('personal');
   
+  // New profile fields
+  const [jobRole, setJobRole] = useState<string>('Security Professional');
+  const [location, setLocation] = useState<string>('Bangalore, India');
+  const [bio, setBio] = useState<string>('Passionate about cybersecurity and protecting systems from intrusions. Experienced in network security and threat detection.');
+  
   useEffect(() => {
     // Redirect if not logged in
     if (!isLoading && !user) {
@@ -46,6 +55,12 @@ const Profile: React.FC = () => {
       setName(userProfile.name || '');
       setEmail(userProfile.email || '');
       setPhotoURL(userProfile.photoURL || '');
+      
+      // In a real app, these would come from the profile too
+      // For demo, we're using defaults
+      setJobRole(userProfile.jobRole || 'Security Professional');
+      setLocation(userProfile.location || 'Bangalore, India');
+      setBio(userProfile.bio || 'Passionate about cybersecurity and protecting systems from intrusions. Experienced in network security and threat detection.');
     }
   }, [user, userProfile, isLoading, navigate]);
 
@@ -60,6 +75,9 @@ const Profile: React.FC = () => {
     if (userProfile) {
       setName(userProfile.name || '');
       setEmail(userProfile.email || '');
+      setJobRole(userProfile.jobRole || 'Security Professional');
+      setLocation(userProfile.location || 'Bangalore, India');
+      setBio(userProfile.bio || 'Passionate about cybersecurity and protecting systems from intrusions. Experienced in network security and threat detection.');
     }
     setIsEditing(false);
     setError('');
@@ -87,6 +105,9 @@ const Profile: React.FC = () => {
       await updateUserProfile({
         name,
         photoURL: updatedPhotoURL,
+        jobRole,
+        location,
+        bio
       });
       
       setIsEditing(false);
@@ -318,10 +339,10 @@ const Profile: React.FC = () => {
                 <div className="profile-form">
                   <div className="profile-field">
                     <div className="field-icon">
-                      <FaUser />
+                      <FaIdCard />
                     </div>
                     <div className="field-content">
-                      <label>Name</label>
+                      <label>Full Name</label>
                       {isEditing ? (
                         <TextField
                           fullWidth
@@ -329,10 +350,52 @@ const Profile: React.FC = () => {
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           className="edit-field"
-                          placeholder="Your Name"
+                          placeholder="Your Full Name"
                         />
                       ) : (
                         <div className="field-value">{userProfile.name}</div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="profile-field">
+                    <div className="field-icon">
+                      <FaBriefcase />
+                    </div>
+                    <div className="field-content">
+                      <label>Job Role</label>
+                      {isEditing ? (
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          value={jobRole}
+                          onChange={(e) => setJobRole(e.target.value)}
+                          className="edit-field"
+                          placeholder="Your Job Role"
+                        />
+                      ) : (
+                        <div className="field-value">{jobRole}</div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="profile-field">
+                    <div className="field-icon">
+                      <FaMapMarkerAlt />
+                    </div>
+                    <div className="field-content">
+                      <label>Location</label>
+                      {isEditing ? (
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          value={location}
+                          onChange={(e) => setLocation(e.target.value)}
+                          className="edit-field"
+                          placeholder="Your Location"
+                        />
+                      ) : (
+                        <div className="field-value">{location}</div>
                       )}
                     </div>
                   </div>
@@ -349,6 +412,29 @@ const Profile: React.FC = () => {
                           <span className="verified-badge">Verified</span>
                         </Tooltip>
                       </div>
+                    </div>
+                  </div>
+                  
+                  <div className="profile-field bio-field">
+                    <div className="field-icon">
+                      <FaStickyNote />
+                    </div>
+                    <div className="field-content full-width">
+                      <label>Bio</label>
+                      {isEditing ? (
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          value={bio}
+                          onChange={(e) => setBio(e.target.value)}
+                          className="edit-field"
+                          placeholder="Tell us a bit about yourself"
+                          multiline
+                          rows={4}
+                        />
+                      ) : (
+                        <div className="field-value bio-text">{bio}</div>
+                      )}
                     </div>
                   </div>
                   

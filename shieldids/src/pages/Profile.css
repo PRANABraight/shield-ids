@@ -591,3 +591,79 @@
     text-align: center;
   }
 }
+
+/* Add these styles to the Profile.css file */
+
+.bio-field {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.field-content.full-width {
+  width: 100%;
+}
+
+.field-value.bio-text {
+  white-space: pre-line;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  padding: 15px;
+  font-style: italic;
+  position: relative;
+}
+
+.field-value.bio-text::before {
+  content: '"';
+  font-size: 36px;
+  font-style: normal;
+  color: rgba(77, 121, 255, 0.3);
+  position: absolute;
+  top: 5px;
+  left: 10px;
+}
+
+.field-value.bio-text::after {
+  content: '"';
+  font-size: 36px;
+  font-style: normal;
+  color: rgba(77, 121, 255, 0.3);
+  position: absolute;
+  bottom: -10px;
+  right: 10px;
+}
+
+.profile-field .field-icon {
+  margin-top: 6px;
+}
+
+/* Custom icons for specific fields */
+.profile-field .field-icon .fa-id-card,
+.profile-field .field-icon .fa-briefcase {
+  color: #4d79ff;
+}
+
+.profile-field .field-icon .fa-map-marker-alt {
+  color: #e74c3c;
+}
+
+.profile-field .field-icon .fa-sticky-note {
+  color: #f1c40f;
+}
+
+/* Responsive styles for the bio field */
+@media (max-width: 768px) {
+  .profile-field.bio-field {
+    flex-direction: column;
+  }
+  
+  .bio-field .field-icon {
+    margin-bottom: 10px;
+  }
+  
+  .field-value.bio-text {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
