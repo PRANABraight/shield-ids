@@ -21,7 +21,7 @@ const LandingPage: React.FC = () => {
               <FeaturesSection />
               
             </div>
-        </>
+        </ >
     );
 };
 
