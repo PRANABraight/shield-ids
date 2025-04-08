@@ -1,4 +1,4 @@
-# NetGuard IDS - Network Intrusion Detection System
+# Shield IDS - Network Intrusion Detection System
 
 ![Shield IDS Logo](./src/assets/NetGuard-removebg-preview.png)
 
