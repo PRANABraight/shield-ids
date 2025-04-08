@@ -1,5 +1,3 @@
-/** @module RGBShiftShader */
-
 /**
  * RGB Shift Shader
  * Shifts red and blue channels from center in opposite directions
@@ -8,10 +6,8 @@
  *
  * amount: shift distance (1 is width of input)
  * angle: shift angle in radians
- *
- * @constant
- * @type {ShaderMaterial~Shader}
  */
+
 const RGBShiftShader = {
 
 	name: 'RGBShiftShader',

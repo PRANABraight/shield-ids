@@ -15,38 +15,21 @@ import {
 } from 'three';
 
 /**
- * A loader for the 3DS format, based on lib3ds.
+ * Autodesk 3DS three.js file loader, based on lib3ds.
  *
  * Loads geometry with uv and materials basic properties with texture support.
  *
- * ```js
- * const loader = new TDSLoader();
- * loader.setResourcePath( 'models/3ds/portalgun/textures/' );
- * const object = await loader.loadAsync( 'models/3ds/portalgun/portalgun.3ds' );
- * scene.add( object );
- *
- * @augments Loader
+ * @class TDSLoader
+ * @constructor
  */
+
 class TDSLoader extends Loader {
 
-	/**
-	 * Constructs a new 3DS loader.
-	 *
-	 * @param {LoadingManager} [manager] - The loading manager.
-	 */
 	constructor( manager ) {
 
 		super( manager );
 
-		/**
-		 * Whether debug mode should be enabled or not.
-		 *
-		 * @type {boolean}
-		 * @default false
-		 */
 		this.debug = false;
-
-		// internals
 
 		this.group = null;
 
@@ -56,13 +39,13 @@ class TDSLoader extends Loader {
 	}
 
 	/**
-	 * Starts loading from the given URL and passes the loaded 3DS asset
-	 * to the `onLoad()` callback.
+	 * Load 3ds file from url.
 	 *
-	 * @param {string} url - The path/URL of the file to be loaded. This can also be a data URI.
-	 * @param {function(Group)} onLoad - Executed when the loading process has been finished.
-	 * @param {onProgressCallback} onProgress - Executed while the loading is in progress.
-	 * @param {onErrorCallback} onError - Executed when errors occur.
+	 * @method load
+	 * @param {[type]} url URL for the file.
+	 * @param {Function} onLoad onLoad callback, receives group Object3D as argument.
+	 * @param {Function} onProgress onProgress callback.
+	 * @param {Function} onError onError callback.
 	 */
 	load( url, onLoad, onProgress, onError ) {
 
@@ -103,11 +86,12 @@ class TDSLoader extends Loader {
 	}
 
 	/**
-	 * Parses the given 3DS data and returns the resulting data.
+	 * Parse arraybuffer data and load 3ds file.
 	 *
-	 * @param {ArrayBuffer} arraybuffer - The raw 3DS data as an array buffer.
-	 * @param {string} path - The asset path.
-	 * @return {Group} The parsed asset represented as a group.
+	 * @method parse
+	 * @param {ArrayBuffer} arraybuffer Arraybuffer data to be loaded.
+	 * @param {String} path Path for external resources.
+	 * @return {Group} Group loaded from 3ds file.
 	 */
 	parse( arraybuffer, path ) {
 
@@ -130,9 +114,9 @@ class TDSLoader extends Loader {
 	/**
 	 * Decode file content to read 3ds data.
 	 *
-	 * @private
-	 * @param {ArrayBuffer} arraybuffer - Arraybuffer data to be loaded.
-	 * @param {string} path - Path for external resources.
+	 * @method readFile
+	 * @param {ArrayBuffer} arraybuffer Arraybuffer data to be loaded.
+	 * @param {String} path Path for external resources.
 	 */
 	readFile( arraybuffer, path ) {
 
@@ -173,9 +157,9 @@ class TDSLoader extends Loader {
 	/**
 	 * Read mesh data chunk.
 	 *
-	 * @private
-	 * @param {Chunk} chunk - to read mesh from
-	 * @param {string} path - Path for external resources.
+	 * @method readMeshData
+	 * @param {Chunk} chunk to read mesh from
+	 * @param {String} path Path for external resources.
 	 */
 	readMeshData( chunk, path ) {
 
@@ -219,8 +203,8 @@ class TDSLoader extends Loader {
 	/**
 	 * Read named object chunk.
 	 *
-	 * @private
-	 * @param {Chunk} chunk - Chunk in use.
+	 * @method readNamedObject
+	 * @param {Chunk} chunk Chunk in use.
 	 */
 	readNamedObject( chunk ) {
 
@@ -250,9 +234,9 @@ class TDSLoader extends Loader {
 	/**
 	 * Read material data chunk and add it to the material list.
 	 *
-	 * @private
-	 * @param {Chunk} chunk - Chunk in use.
-	 * @param {string} path - Path for external resources.
+	 * @method readMaterialEntry
+	 * @param {Chunk} chunk Chunk in use.
+	 * @param {String} path Path for external resources.
 	 */
 	readMaterialEntry( chunk, path ) {
 
@@ -352,9 +336,9 @@ class TDSLoader extends Loader {
 	/**
 	 * Read mesh data chunk.
 	 *
-	 * @private
-	 * @param {Chunk} chunk - Chunk in use.
-	 * @return {Mesh} - The parsed mesh.
+	 * @method readMesh
+	 * @param {Chunk} chunk Chunk in use.
+	 * @return {Mesh} The parsed mesh.
 	 */
 	readMesh( chunk ) {
 
@@ -414,7 +398,7 @@ class TDSLoader extends Loader {
 
 			} else if ( next.id === MESH_MATRIX ) {
 
-				this.debugMessage( '   Transformation Matrix (TODO)' );
+				this.debugMessage( '   Tranformation Matrix (TODO)' );
 
 				const values = [];
 				for ( let i = 0; i < 12; i ++ ) {
@@ -476,9 +460,9 @@ class TDSLoader extends Loader {
 	/**
 	 * Read face array data chunk.
 	 *
-	 * @private
-	 * @param {Chunk} chunk - Chunk in use.
-	 * @param {Mesh} mesh - Mesh to be filled with the data read.
+	 * @method readFaceArray
+	 * @param {Chunk} chunk Chunk in use.
+	 * @param {Mesh} mesh Mesh to be filled with the data read.
 	 */
 	readFaceArray( chunk, mesh ) {
 
@@ -544,9 +528,9 @@ class TDSLoader extends Loader {
 	/**
 	 * Read texture map data chunk.
 	 *
-	 * @private
-	 * @param {Chunk} chunk - Chunk in use.
-	 * @param {string} path - Path for external resources.
+	 * @method readMap
+	 * @param {Chunk} chunk Chunk in use.
+	 * @param {String} path Path for external resources.
 	 * @return {Texture} Texture read from this data chunk.
 	 */
 	readMap( chunk, path ) {
@@ -603,8 +587,8 @@ class TDSLoader extends Loader {
 	/**
 	 * Read material group data chunk.
 	 *
-	 * @private
-	 * @param {Chunk} chunk - Chunk in use.
+	 * @method readMaterialGroup
+	 * @param {Chunk} chunk Chunk in use.
 	 * @return {Object} Object with name and index of the object.
 	 */
 	readMaterialGroup( chunk ) {
@@ -629,9 +613,9 @@ class TDSLoader extends Loader {
 	/**
 	 * Read a color value.
 	 *
-	 * @private
-	 * @param {Chunk} chunk - Chunk.
-	 * @return {Color} Color value read.
+	 * @method readColor
+	 * @param {Chunk} chunk Chunk.
+	 * @return {Color} Color value read..
 	 */
 	readColor( chunk ) {
 
@@ -671,9 +655,9 @@ class TDSLoader extends Loader {
 	/**
 	 * Read percentage value.
 	 *
-	 * @private
-	 * @param {Chunk} chunk - Chunk to read data from.
-	 * @return {number} Data read from the dataview.
+	 * @method readPercentage
+	 * @param {Chunk} chunk Chunk to read data from.
+	 * @return {Number} Data read from the dataview.
 	 */
 	readPercentage( chunk ) {
 
@@ -702,8 +686,8 @@ class TDSLoader extends Loader {
 	 *
 	 * Is controlled by a flag to show or hide debug messages.
 	 *
-	 * @private
-	 * @param {Object} message - Debug message to print to the console.
+	 * @method debugMessage
+	 * @param {Object} message Debug message to print to the console.
 	 */
 	debugMessage( message ) {
 
@@ -717,20 +701,17 @@ class TDSLoader extends Loader {
 
 }
 
-/**
- * Read data/sub-chunks from chunk.
- *
- * @private
- */
+
+/** Read data/sub-chunks from chunk */
 class Chunk {
 
 	/**
 	 * Create a new chunk
 	 *
-	 * @private
-	 * @param {DataView} data - DataView to read from.
-	 * @param {number} position - In data.
-	 * @param {Function} debugMessage - Logging callback.
+	 * @class Chunk
+	 * @param {DataView} data DataView to read from.
+	 * @param {Number} position in data.
+	 * @param {Function} debugMessage logging callback.
 	 */
 	constructor( data, position, debugMessage ) {
 
@@ -760,10 +741,10 @@ class Chunk {
 	}
 
 	/**
-	 * Reads a sub cchunk.
+	 * read a sub cchunk.
 	 *
-	 * @private
-	 * @return {Chunk | null} next sub chunk.
+	 * @method readChunk
+	 * @return {Chunk | null} next sub chunk
 	 */
 	readChunk() {
 
@@ -789,10 +770,10 @@ class Chunk {
 	}
 
 	/**
-	 * Returns the ID of this chunk as Hex
+	 * return the ID of this chunk as Hex
 	 *
-	 * @private
-	 * @return {string} hex-string of id
+	 * @method idToString
+	 * @return {String} hex-string of id
 	 */
 	get hexId() {
 
@@ -809,8 +790,8 @@ class Chunk {
 	/**
 	 * Read byte value.
 	 *
-	 * @private
-	 * @return {number} Data read from the dataview.
+	 * @method readByte
+	 * @return {Number} Data read from the dataview.
 	 */
 	readByte() {
 
@@ -823,8 +804,8 @@ class Chunk {
 	/**
 	 * Read 32 bit float value.
 	 *
-	 * @private
-	 * @return {number} Data read from the dataview.
+	 * @method readFloat
+	 * @return {Number} Data read from the dataview.
 	 */
 	readFloat() {
 
@@ -846,8 +827,8 @@ class Chunk {
 	/**
 	 * Read 32 bit signed integer value.
 	 *
-	 * @private
-	 * @return {number} Data read from the dataview.
+	 * @method readInt
+	 * @return {Number} Data read from the dataview.
 	 */
 	readInt() {
 
@@ -860,8 +841,8 @@ class Chunk {
 	/**
 	 * Read 16 bit signed integer value.
 	 *
-	 * @private
-	 * @return {number} Data read from the dataview.
+	 * @method readShort
+	 * @return {Number} Data read from the dataview.
 	 */
 	readShort() {
 
@@ -874,8 +855,8 @@ class Chunk {
 	/**
 	 * Read 64 bit unsigned integer value.
 	 *
-	 * @private
-	 * @return {number} Data read from the dataview.
+	 * @method readDWord
+	 * @return {Number} Data read from the dataview.
 	 */
 	readDWord() {
 
@@ -888,8 +869,8 @@ class Chunk {
 	/**
 	 * Read 32 bit unsigned integer value.
 	 *
-	 * @private
-	 * @return {number} Data read from the dataview.
+	 * @method readWord
+	 * @return {Number} Data read from the dataview.
 	 */
 	readWord() {
 
@@ -902,8 +883,8 @@ class Chunk {
 	/**
 	 * Read NULL terminated ASCII string value from chunk-pos.
 	 *
-	 * @private
-	 * @return {string} Data read from the dataview.
+	 * @method readString
+	 * @return {String} Data read from the dataview.
 	 */
 	readString() {
 

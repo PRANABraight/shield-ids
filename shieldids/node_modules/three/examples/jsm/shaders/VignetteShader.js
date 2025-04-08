@@ -1,11 +1,9 @@
-/** @module VignetteShader */
-
 /**
- * Based on [PaintEffect postprocess from ro.me]{@link http://code.google.com/p/3-dreams-of-black/source/browse/deploy/js/effects/PaintEffect.js}.
- *
- * @constant
- * @type {ShaderMaterial~Shader}
+ * Vignette shader
+ * based on PaintEffect postprocess from ro.me
+ * http://code.google.com/p/3-dreams-of-black/source/browse/deploy/js/effects/PaintEffect.js
  */
+
 const VignetteShader = {
 
 	name: 'VignetteShader',

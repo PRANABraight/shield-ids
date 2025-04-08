@@ -2,14 +2,12 @@ import {
 	Vector2
 } from 'three';
 
-/** @module DotScreenShader */
-
 /**
- * Dot screen shader based on [glfx.js sepia shader]{@link https://github.com/evanw/glfx.js}.
- *
- * @constant
- * @type {ShaderMaterial~Shader}
+ * Dot screen shader
+ * based on glfx.js sepia shader
+ * https://github.com/evanw/glfx.js
  */
+
 const DotScreenShader = {
 
 	name: 'DotScreenShader',
