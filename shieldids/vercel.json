@@ -1,0 +1,10 @@
+{
+  "buildCommand": "chmod +x node_modules/.bin/vite && npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install --legacy-peer-deps",
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ],
+  "framework": "vite"
+}
