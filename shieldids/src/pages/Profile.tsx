@@ -43,6 +43,25 @@ const Profile: React.FC = () => {
   const [location, setLocation] = useState<string>('Bangalore, India');
   const [bio, setBio] = useState<string>('Passionate about cybersecurity and protecting systems from intrusions. Experienced in network security and threat detection.');
   
+  // Create a temporary profile if user exists but userProfile doesn't
+  const effectiveUserProfile = React.useMemo(() => {
+    if (userProfile) return userProfile;
+    
+    // If user exists but profile doesn't, create a temporary one
+    if (user) {
+      return {
+        uid: user.uid,
+        email: user.email || '',
+        name: user.displayName || user.email?.split('@')[0] || 'User',
+        createdAt: new Date(),
+        lastLogin: new Date(),
+        photoURL: user.photoURL || '',
+      };
+    }
+    
+    return null;
+  }, [user, userProfile]);
+  
   useEffect(() => {
     // Redirect if not logged in
     if (!isLoading && !user) {
@@ -50,20 +69,20 @@ const Profile: React.FC = () => {
     }
     
     // Set initial values from profile
-    if (userProfile) {
-      setName(userProfile.name || '');
-      setEmail(userProfile.email || '');
-      setPhotoURL(userProfile.photoURL || '');
+    if (effectiveUserProfile) {
+      setName(effectiveUserProfile.name || '');
+      setEmail(effectiveUserProfile.email || '');
+      setPhotoURL(effectiveUserProfile.photoURL || '');
       
       // In a real app, these would come from the profile too
       // For demo, we're using defaults
       // Type assertion to access additional profile fields
-      const extendedProfile = userProfile as any;
+      const extendedProfile = effectiveUserProfile as any;
       setJobRole(extendedProfile?.jobRole || 'Security Professional');
       setLocation(extendedProfile?.location || 'Bangalore, India');
       setBio(extendedProfile?.bio || 'Passionate about cybersecurity and protecting systems from intrusions. Experienced in network security and threat detection.');
     }
-  }, [user, userProfile, isLoading, navigate]);
+  }, [user, effectiveUserProfile, isLoading, navigate]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -73,11 +92,11 @@ const Profile: React.FC = () => {
   
   const handleCancelEdit = () => {
     // Reset form to current profile values
-    if (userProfile) {
-      setName(userProfile.name || '');
-      setEmail(userProfile.email || '');
+    if (effectiveUserProfile) {
+      setName(effectiveUserProfile.name || '');
+      setEmail(effectiveUserProfile.email || '');
       // Type assertion to access additional profile fields
-      const extendedProfile = userProfile as any;
+      const extendedProfile = effectiveUserProfile as any;
       setJobRole(extendedProfile?.jobRole || 'Security Professional');
       setLocation(extendedProfile?.location || 'Bangalore, India');
       setBio(extendedProfile?.bio || 'Passionate about cybersecurity and protecting systems from intrusions. Experienced in network security and threat detection.');
@@ -178,7 +197,8 @@ const Profile: React.FC = () => {
     );
   }
   
-  if (!user || !userProfile) {
+  // Only redirect to login if both user and effectiveUserProfile are null
+  if (!user) {
     return (
       <Layout>
         <div className="profile-error">
@@ -335,7 +355,7 @@ const Profile: React.FC = () => {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.3 }}
                     >
-                      Member since {new Date(userProfile.createdAt || Date.now()).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                      Member since {new Date(effectiveUserProfile?.createdAt || Date.now()).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                     </motion.div>
                   )}
                 </div>
@@ -357,7 +377,7 @@ const Profile: React.FC = () => {
                           placeholder="Your Full Name"
                         />
                       ) : (
-                        <div className="field-value">{userProfile.name}</div>
+                        <div className="field-value">{effectiveUserProfile?.name}</div>
                       )}
                     </div>
                   </div>
@@ -411,7 +431,7 @@ const Profile: React.FC = () => {
                     <div className="field-content">
                       <label>Email</label>
                       <div className="field-value with-badge">
-                        {userProfile.email}
+                        {effectiveUserProfile?.email}
                         <Tooltip title="Your email is verified and secure" arrow placement="top">
                           <span className="verified-badge">Verified</span>
                         </Tooltip>
@@ -449,7 +469,7 @@ const Profile: React.FC = () => {
                     <div className="field-content">
                       <label>Account Created</label>
                       <div className="field-value">
-                        {formatDate(userProfile.createdAt)}
+                        {formatDate(effectiveUserProfile?.createdAt)}
                       </div>
                     </div>
                   </div>
@@ -461,7 +481,7 @@ const Profile: React.FC = () => {
                     <div className="field-content">
                       <label>Last Login</label>
                       <div className="field-value">
-                        {formatDate(userProfile.lastLogin)}
+                        {formatDate(effectiveUserProfile?.lastLogin)}
                       </div>
                     </div>
                   </div>
@@ -585,4 +605,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile; 
+export default Profile;
