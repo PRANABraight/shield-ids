@@ -81,7 +81,7 @@ const FeatureCard = ({ feature, index }: { feature: typeof features[0], index: n
         </h3>
         <p>{feature.description}</p>
         <div className="feature-details">
-          <span className="learn-more">Learn More →</span>
+          {/* <span className="learn-more">Learn More →</span> */}
         </div>
       </div>
     </motion.div>

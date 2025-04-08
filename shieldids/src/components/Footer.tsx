@@ -61,9 +61,9 @@ const Footer = () => {
         <div className="footer-column">
           <h3>Quick Links</h3>
           <nav className="footer-nav">
+            <Link to="/">Home</Link>
             <Link to="/about">About</Link>
-            <Link to="/features">Research</Link>
-            {/* <Link to="/dashboard">Dashboard</Link> */}
+            <Link to="/download">Download</Link>
             <Link to="/contact">Contact</Link>
           </nav>
         </div>

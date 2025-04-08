@@ -60,7 +60,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.8 }}
         >
-          <Link to="/dashboard" className="cta-button">
+          <Link to="/download" className="cta-button">
             Get Started
             <span className="button-glow"></span>
           </Link>
